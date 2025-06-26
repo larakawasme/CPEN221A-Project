@@ -58,7 +58,7 @@ Pedal Prep is an application that guides cyclists through pre-ride safety checks
   - If user doesn’t complete a task, it will alert the user:
     - “You skipped a safety step. Are you sure you want to continue?”
     - Then prompt with the option to go back or continue
-<img src="images/sketch3_pre_ride_checklist_ex.png" width="500"/>
+![Pre-ride checklist sketch](images/sketch3_pre_ride_checklist_ex.png)
 ---
 
 ### 3. Maintenance History Page
@@ -77,7 +77,7 @@ Pedal Prep is an application that guides cyclists through pre-ride safety checks
 - Will show upcoming tasks in a neutral colour (grey or soft green)
 - Users can select an item and complete the task
 - App will provide basic instructions on how to complete the task
-
+![Maintenance page sktech](images/sketch4_bike_maintenace_page_ex.png)
 ---
 
 ### 4. Add Bike Page
@@ -95,3 +95,4 @@ Pedal Prep is an application that guides cyclists through pre-ride safety checks
 - Errors:
   - If they try to add the bike without filling any of the fields it will give an error: “Please complete bike information”
 
+![Add bike page sketch](images/sketch5_add_bike_page_ex.png)
