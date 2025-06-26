@@ -15,7 +15,7 @@ https://www.sciencedirect.com/science/article/pii/S2214140523000464
 
 ## Solution
 
-Pedal Prep is an application that guides cyclists through pre-ride safety checks, routine maintenance, and repair tracking. The app provides video instructions, maintenance reminders, and a record of past services.
+Pedal Prep is an application that guides cyclists through pre-ride safety checks, routine maintenance, and repair tracking. The app provides instructions, maintenance reminders, and a record of past services.
 
 ### 1. Home Screen
 **Purpose:** This will act as the user’s dashboard. It will summarize alerts, have a button to the ride prep checklist, have a button to view maintenance history, and a button to add bike.
