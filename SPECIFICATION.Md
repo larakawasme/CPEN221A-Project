@@ -77,6 +77,7 @@ Pedal Prep is an application that guides cyclists through pre-ride safety checks
 - Will show upcoming tasks in a neutral colour (grey or soft green)
 - Users can select an item and complete the task
 - App will provide basic instructions on how to complete the task
+- Option to edit tasks (add/delete) and add own maintenance routine. Can add repairs under here that happened (break bleed for example)
 ![Maintenance page sktech](images/sketch4_bike_maintenace_page_ex.png)
 ---
 
