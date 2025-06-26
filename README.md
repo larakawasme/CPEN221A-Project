@@ -1,7 +1,7 @@
 # Pedal Prep
 
 ## Team Name:  Pedal Prep
-![Pedal Prep Logo](images/logo.png)
+<img src="images/logo.png" alt="Pedal Prep Logo" width="600">
 ## Team Members  
 **Lara Kawasme** (solo project)
 
