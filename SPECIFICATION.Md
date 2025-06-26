@@ -33,7 +33,8 @@ Pedal Prep is an application that guides cyclists through pre-ride safety checks
 - Maintenance alerts:
   - Lube chain this week
   - Check brakes this week
-
+![Blank home screen](images/sketch1_home_screen_blank.png)
+![Home screen with data](images/sketch2_home_screen_with_data.png)
 ---
 
 ### 2. Pre-ride Checklist Page
@@ -57,7 +58,7 @@ Pedal Prep is an application that guides cyclists through pre-ride safety checks
   - If user doesn’t complete a task, it will alert the user:
     - “You skipped a safety step. Are you sure you want to continue?”
     - Then prompt with the option to go back or continue
-
+<img src="images/sketch3_pre_ride_checklist_ex.png" width="500"/>
 ---
 
 ### 3. Maintenance History Page
