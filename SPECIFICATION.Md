@@ -14,73 +14,83 @@ https://www.sciencedirect.com/science/article/pii/S2214140523000464
 
 
 ## Solution
+
 Pedal Prep is an application that guides cyclists through pre-ride safety checks, routine maintenance, and repair tracking. The app provides video instructions, maintenance reminders, and a record of past services.
 
-**1. Home Screen**
-**Purpose:**  This will act as the user’s dashboard. It will summarize alerts, have a button to the ride prep checklist, have a button to view maintenance history, and a button to add bike.
-**Key elements and algorithmic functionality:**
--Greeting such as “Welcome” or “Good evening!”
--Page will be blank if there is no bike yet and will have a button to add a bike
--Bike status summary
-  -Last tire pressure check: 10 days ago
-  -Last time chain was lubed: yesterday
--Buttons
-  -A button to begin the pre-ride checklist
-  -A button to go to the maintenance history page
-  -Add new bike (if none exists)
--Maintenance alerts
-  -Lube chain this week
-  -Check brakes this week
+### 1. Home Screen
+**Purpose:** This will act as the user’s dashboard. It will summarize alerts, have a button to the ride prep checklist, have a button to view maintenance history, and a button to add bike.
 
-**2. Pre-ride checklist page**
-**Purpose:** This page will take users through a pre-ride checklist to ensure safety before riding. 
 **Key elements and algorithmic functionality:**
--Users have to check off item once completed
-  -Implemented with a checkbox i think
--Users can select which checklist items appear and in what order
-  -Default checklist will include
-    -Test brakes
-    -Inspect chain for dryness
-    -Check shifting is smooth
-    -Check tire pressure
--Once checklist is completed the app will
-  -Record completion timestamp for the bike log
-  -Update relevant last complete tasks
-  -Goes back to the home page
--This will be a customizable page. Users can choose to edit what they want on their screen
--Errors
-  -If user doesn’t complete a task it will alert the user
-    -“You skipped a safety step. Are you sure you want to continue?”
-      -Then prompt a with the option to go back or continue
+- Greeting such as “Welcome” or “Good evening!”
+- Page will be blank if there is no bike yet and will have a button to add a bike
+- Bike status summary:
+  - Last tire pressure check: 10 days ago
+  - Last time chain was lubed: yesterday
+- Buttons:
+  - A button to begin the pre-ride checklist
+  - A button to go to the maintenance history page
+  - Add new bike (if none exists)
+- Maintenance alerts:
+  - Lube chain this week
+  - Check brakes this week
 
-**3. Maintenance history page**
-**Purpose:** This will be the page to see all completed tasks and upcoming tasks
+---
+
+### 2. Pre-ride Checklist Page
+**Purpose:** This page will take users through a pre-ride checklist to ensure safety before riding.
+
 **Key elements and algorithmic functionality:**
--Section for each type of maintenance activity
-  -Includes task name
-  -Date completed
-  -Notes
-    -I would like to keep full history for a year but I am unsure how much more work that will be for this project so I will not include in MVP 
-    -Thus each item will just have date completed and any notes in text
--Will calculate reminders based on time
-    -Ideally I’d like this to be based off distance but that would require riders to be able to upload their distances, types of ride, etc and adds a layer of complexity. 
-  -Will show overdue items in red
-  -Will show upcoming tasks in a neutral colour: grey or soft green
-  -Users can select an item and complete the task. 
-  -App will provide basic instructions on how to complete the task
+- Users have to check off item once completed
+  - Implemented with a checkbox
+- Users can select which checklist items appear and in what order
+  - Default checklist will include:
+    - Test brakes
+    - Inspect chain for dryness
+    - Check shifting is smooth
+    - Check tire pressure
+- Once checklist is completed, the app will:
+  - Record completion timestamp for the bike log
+  - Update relevant last complete tasks
+  - Go back to the home page
+- This will be a customizable page. Users can choose to edit what they want on their screen
+- Errors:
+  - If user doesn’t complete a task, it will alert the user:
+    - “You skipped a safety step. Are you sure you want to continue?”
+    - Then prompt with the option to go back or continue
 
-**4. Add bike page**
+---
+
+### 3. Maintenance History Page
+**Purpose:** This will be the page to see all completed tasks and upcoming tasks.
+
+**Key elements and algorithmic functionality:**
+- Section for each type of maintenance activity
+  - Includes task name
+  - Date completed
+  - Notes:
+    - I would like to keep full history for a year but I am unsure how much more work that will be for this project so I will not include in MVP
+    - Thus, each item will just have date completed and any notes in text
+- Will calculate reminders based on time
+  - Ideally I’d like this to be based off distance but that would require riders to upload their distances, types of ride, etc., which adds complexity
+- Will show overdue items in red
+- Will show upcoming tasks in a neutral colour (grey or soft green)
+- Users can select an item and complete the task
+- App will provide basic instructions on how to complete the task
+
+---
+
+### 4. Add Bike Page
 **Purpose:** To add a new bike to keep track of!
-**Key elements and algorithmic functionality:**
--Accessed from the home page
--User inputs the type of bike, brand, and model (if they know)
-  -The MVP will only support road/commuter bikes for simplicity (no bikes with front & rear suspension since that will add complexity despite my love for mountain bikes)
-  -Dropdown for type of bike
-    -Road,commuter
-  -Brand: text
-  -Model: optional text
--Once complete, takes user back to homepage
--Errors
-  -If they try to add the bike without filling any of the fields it will give an error: “Please complete bike information”
 
+**Key elements and algorithmic functionality:**
+- Accessed from the home page
+- User inputs the type of bike, brand, and model (if they know)
+  - The MVP will only support road/commuter bikes for simplicity (no bikes with front & rear suspension)
+  - Dropdown for type of bike:
+    - Road, commuter
+  - Brand: text input
+  - Model: optional text input
+- Once complete, takes user back to homepage
+- Errors:
+  - If they try to add the bike without filling any of the fields it will give an error: “Please complete bike information”
 
