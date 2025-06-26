@@ -2,8 +2,9 @@
 
 ## Team Name:  Pedal Prep
 <img src="images/logo.png" alt="Pedal Prep Logo" width="400">
+
 ## Team Members  
-**Lara Kawasme** (solo project)
+Lara Kawasme (solo project)
 
 ## Mission Statement  
 Encourage cyclists to ride safely and confidently by simplifying bike maintenance and pre-ride preparation through easy-to-use, customizable checklists and timely reminders.
