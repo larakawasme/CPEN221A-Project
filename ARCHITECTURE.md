@@ -116,7 +116,9 @@ Server side
   - Get checklist items.
   - Submit checklist completion.
   - Update customized checklist items.
-Communicates with `MaintenanceModel` to update last completed dates for tasks completed in checklist completion.
+
+Communicates with `MaintenanceModel` to:
+- update last completed dates for tasks completed in checklist completion.
 - If not all checklist items are checked, shows warning dialog and gives user option to proceed or return.
 
 ---
