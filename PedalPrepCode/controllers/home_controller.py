@@ -1,5 +1,5 @@
-from ..models.maintenance_model import MaintenanceModel
-from ..models.bike_model import BikeModel
+from models.maintenance_model import MaintenanceModel
+from models.bike_model import BikeModel
 class HomeController:
     def __init__(self, bike_model: BikeModel, maintenance_model: MaintenanceModel):
         """
@@ -19,7 +19,7 @@ class HomeController:
 
         Postcondition: Returns a string greeting (e.g., "Good morning", "Welcome back").
         """
-        return "Welcome back"
+        return "Welcome back!"
 
     def get_bike_status_summary(self) -> dict:
         """

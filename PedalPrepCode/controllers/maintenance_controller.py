@@ -1,4 +1,4 @@
-from ..models.maintenance_model import MaintenanceModel
+from models.maintenance_model import MaintenanceModel
 
 class MaintenanceController:
     def __init__(self, maintenance_model: MaintenanceModel):

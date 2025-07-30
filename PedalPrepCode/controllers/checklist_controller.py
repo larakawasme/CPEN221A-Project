@@ -1,5 +1,5 @@
-from ..models.checklist_model import ChecklistModel
-from ..models.maintenance_model import MaintenanceModel
+from models.checklist_model import ChecklistModel
+from models.maintenance_model import MaintenanceModel
 class ChecklistController:
     def __init__(self, checklist_model: ChecklistModel, maintenance_model: MaintenanceModel):
         """

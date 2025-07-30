@@ -1,4 +1,4 @@
-from ..models.bike_model import BikeModel
+from models.bike_model import BikeModel
 class BikeController:
     def __init__(self, bike_model: BikeModel):
         """
