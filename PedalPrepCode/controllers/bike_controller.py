@@ -15,22 +15,9 @@ class BikeController:
         Precondition: `bike_type` and `brand` are strings from the user's form input.
         Postcondition: Returns (True, "") on success, or (False, error_message) on failure.
         """
-        if self.validate_bike_input(bike_type, brand):
-            # Placeholder: pretend we called model's method and it worked
-            self.bike_model.create_or_update_bike(bike_type=bike_type, brand=brand, model=model)
-            return True, ""
         
-        return False, "Please complete bike information."
-
-    def validate_bike_input(self, bike_type: str, brand: str) -> bool:
-        """
-        Summary: Validates that required fields are present. Called by handle_bike_submission
-
-        Precondition: Strings from the bike form.
-        Postcondition: Returns True if fields are valid; False otherwise.
-        """
-        return True
-
+        return self.bike_model.create_or_update_bike(bike_type=bike_type, brand=brand, model=model)
+ 
     def get_bike_info(self) -> dict:
         """
         Summary: Retrieves bike information from the model.

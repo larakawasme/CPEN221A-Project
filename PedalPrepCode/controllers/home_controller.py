@@ -30,6 +30,14 @@ class HomeController:
         Postcondition: Returns bike info dict or None if no bike registered.
         """
         return self.bike_model.get_bike_info()
+    
+    def bike_exists(self) -> bool:
+        """
+        Summary: Checks if a bike is registered.
+
+        Postcondition: Returns True if bike exists, False otherwise.
+        """
+        return self.bike_model.bike_exists()
 
     def get_recent_maintenance_tasks(self, max_tasks: int = 3) -> list[dict]:
         """

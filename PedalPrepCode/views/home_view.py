@@ -24,12 +24,16 @@ class HomeView:
 
         Postcondition: Shows all key home screen elements.
         """
+        if not self.controller.bike_exists():
+            # Since no bike exists, display the blank home page that allows use to add bike
+            return render_template("home_no_bike.html")
+        
         greeting = self.controller.get_greeting()
         bike_info = self.controller.get_bike_status_summary()
         recent_tasks = self.controller.get_recent_maintenance_tasks()
         overdue, upcoming = self.controller.get_upcoming_and_overdue_tasks()
 
-        # Return rendered template directly
+        # Return rendered template
         return render_template("home.html",
                             greeting=greeting,
                             bike_info=bike_info,

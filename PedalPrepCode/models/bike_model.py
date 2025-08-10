@@ -1,10 +1,11 @@
+from database import get_db
+
 class BikeModel:
     def __init__(self):
         """
         Summary: Initializes the BikeModel and connects to the SQLite database.
         """
-        # Initialize database connection here (placeholder)
-        pass
+        pass 
 
     def get_bike_info(self) -> dict:
         """
@@ -13,12 +14,18 @@ class BikeModel:
         Postcondition: Returns a dictionary with keys like 'type', 'brand', 'model',
                        or None if no bike is registered.
         """
-        return {"Type": "Road",
-                "Brand": "Fuji",
-                "Model": "Sportif 1.1",
-                "Year": 2023}
+        con = get_db()
+        cursor = con.cursor()
+        cursor.execute("SELECT bike_type, brand, model, year FROM bike_info LIMIT 1")
+        row = cursor.fetchone()
+        cursor.close()
 
-    def create_or_update_bike(self, bike_type: str, brand: str, model: str="", year: str="") -> bool:
+        if row:
+            return {"Type": row[0], "Brand": row[1], "Model": row[2], "Year": row[3]}
+        else:
+            return {}
+
+    def create_or_update_bike(self, bike_type: str, brand: str, model: str="", year: str="") -> tuple[bool, str]:
         """
         Summary: Creates or updates the user's bike information in the database.
 
@@ -27,14 +34,42 @@ class BikeModel:
 
         Postcondition: Saves the bike info and returns True if successful, False otherwise.
         """
-        self.bike_exists() # Checks if bike exists to decided if need to update or create new one
+        try:
+            con = get_db()
+            cursor = con.cursor()
+            if self.bike_exists():
+                # Update the first existing row
+                cursor.execute("""
+                    UPDATE bike_info
+                    SET bike_type = ?, brand = ?, model = ?, year = ?
+                    WHERE id = (SELECT id FROM bike_info LIMIT 1)
+                """, (bike_type, brand, model, year))
+            else:
+                # Insert a new row
+                cursor.execute("""
+                    INSERT INTO bike_info (bike_type, brand, model, year)
+                    VALUES (?, ?, ?, ?)
+                """, (bike_type, brand, model, year))
 
-        return True
-
+            con.commit()
+            cursor.close()
+            message = "Bike added sucessfully!, redirecting to home page..."
+            return True, message
+        
+        except Exception as e:
+            message = f"Error occured while trying to create or update the bike: {e}"
+            return False, message
+        
     def bike_exists(self) -> bool:
         """
         Summary: Checks if a bike is registered.
 
         Postcondition: Returns True if bike exists, False otherwise.
         """
-        return False
+        con = get_db()
+        cursor = con.cursor()
+        cursor.execute("SELECT COUNT(*) FROM bike_info") # Run queury to count the rows
+        count = cursor.fetchone()[0]  # Fetch first column of first row
+        cursor.close()
+        return count > 0
+    
