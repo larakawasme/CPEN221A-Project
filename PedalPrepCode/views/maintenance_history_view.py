@@ -1,4 +1,6 @@
-from ..controllers.maintenance_controller import MaintenanceController
+from controllers.maintenance_controller import MaintenanceController
+from flask import request, render_template, redirect, url_for
+
 
 class MaintenanceHistoryView:
     def __init__(self, controller: MaintenanceController):
@@ -16,54 +18,62 @@ class MaintenanceHistoryView:
 
         Postcondition: Outputs the maintenance task history and alerts section.
         """
-        pass
+        message = None
+        message_type = "success"
 
-    def mark_task_completed(self, task_name: str):
-        """
-        Summary: Prompts user to confirm completion of a maintenance task and optional notes,
-        then submits this info to the controller.
+        if request.method == "POST":
+            action = request.form.get("action")
+            task_name = request.form.get("task_name")
 
-        Precondition: task_name is the name of an existing maintenance task.
+            if action == "complete" and task_name:
+                notes = request.form.get("notes", "")
+                success, message = self.controller.mark_task_completed(task_name, notes)
+                message_type = "success" if success else "danger"
 
-        Postcondition: Sends completion data to controller. Displays success or error message.
-        """
-        pass
+        # GET request
+        tasks = self.controller.get_task_history()
+        overdue, upcoming = self.controller.get_upcoming_and_overdue_tasks()
+        return render_template(
+            "maintenance_history.html",
+            tasks=tasks,
+            overdue=overdue,
+            upcoming=upcoming,
+            message=message,
+            message_type=message_type,
+        )
 
-    def view_task_instructions(self, task_name: str):
-        """
-        Summary: Fetches and displays how-to instructions for a maintenance task.
+    def display_edit_maintenance_tasks(self):
+        mode = request.args.get("mode", "edit")  # Default to edit
 
-        Precondition: task_name is the name of an existing maintenance task.
+        if request.method == "POST":
+            task_name = request.form.get("task_name")
+            notes = request.form.get("notes") or None
+            interval_days = request.form.get("interval_days")
+            interval_days = int(interval_days) if interval_days else None
 
-        Postcondition: Outputs instructions to the user.
-        """
-        pass
+            if mode == "edit":
+                success, message = self.controller.update_task(
+                    task_name, notes, interval_days
+                )
+            elif mode == "add":
+                success, message = self.controller.create_task(
+                    task_name, notes, interval_days
+                )
+            else:
+                return render_template(
+                    "edit_maintenance.html",
+                    message="Invalid mode.",
+                    message_type="danger",
+                )
 
-    def edit_reminder_interval(self, task_name: str):
-        """
-        Summary: Allows the user to update the reminder interval (in days) for a maintenance task.
+            message_type = "success" if success else "danger"
 
-        Precondition: task_name is the name of an existing maintenance task.
+            return render_template(
+                "edit_maintenance.html", message=message, message_type=message_type
+            )
 
-        Postcondition: Sends new interval to controller and displays success/error.
-        """
-        pass
-
-    def display_success_message(self, message: str = "Operation completed successfully."):
-        """
-        Summary: Displays a success message.
-
-        Precondition: message is a non-empty string.
-        """
-        print(message)
-
-    def display_error_message(self, message: str):
-        """
-        Summary: Displays an error message.
-
-        Precondition: message is a non-empty string.
-        """
-        print(f"Error: {message}")
+        tasks = self.controller.get_task_history()
+        return render_template("edit_maintenance.html", tasks=tasks, mode=mode)
 
     def navigate_to_home(self):
         """

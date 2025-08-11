@@ -1,5 +1,6 @@
 from models.maintenance_model import MaintenanceModel
 
+
 class MaintenanceController:
     def __init__(self, maintenance_model: MaintenanceModel):
         """
@@ -15,7 +16,7 @@ class MaintenanceController:
 
         Postcondition: Returns a list of task dictionaries (task name, last completed date, notes).
         """
-        return self.maintenance_model.get_recent_tasks()
+        return self.maintenance_model.get_tasks()
 
     def get_upcoming_and_overdue_tasks(self) -> tuple[list[dict], list[dict]]:
         """
@@ -23,36 +24,50 @@ class MaintenanceController:
 
         Postcondition: Returns two lists of task dictionaries: (overdue_tasks, upcoming_tasks)
         """
-        upcoming, overdue = self.maintenance_model.get_upcoming_and_overdue_tasks()
-        # maybe some more cleaning logic
-        return upcoming, overdue
-    
-    def mark_task_completed(self, task_name: str, notes: str = "") -> bool:
+        overdue, upcoming = self.maintenance_model.get_upcoming_and_overdue_tasks()
+        return overdue, upcoming
+
+    def mark_task_completed(self, task_name: str, notes: str = "") -> tuple[bool, str]:
         """
         Summary: Marks a maintenance task as completed.
 
         Precondition: task_name is an existing task
         Postcondition: Updates model with current timestamp and optional notes. Returns True if successful.
+                        Also returns str with status message.
         """
         return self.maintenance_model.complete_task(task_name, notes)
 
     def get_task_instructions(self, task_name: str) -> str:
         """
-        Retrieves task instructions from the model.
-        
+        Summary: Retrieves task instructions from the model.
+
         Precondition: task_name is an existing task
         Postcondition: Returns a string with how-to instructions for the task.
         """
         return self.maintenance_model.fetch_instructions(task_name)
 
-    def update_task_interval(self, task_name: str, days: int) -> bool:
+    def update_task(
+        self, task_name: str, notes: str, interval_days: int
+    ) -> tuple[bool, str]:
         """
-        Updates the reminder interval for a given task.
+        Summary: Updates the reminder interval and or notes for a given task.
 
-        Precondition: 
-            days is a positive integer.
+        Precondition:
+            interval_days is a positive integer.
             task_name is an existing task
 
         Postcondition: Updates the interval in the model. Returns True if successful.
+                        Also returns str with status message.
         """
-        return self.maintenance_model.set_task_interval(task_name, days)
+        return self.maintenance_model.update_task(task_name, notes, interval_days)
+
+    def create_task(
+        self, task_name: str, notes: str, interval_days: int
+    ) -> tuple[bool, str]:
+        """
+        Summary: Creates a maintenance task.
+
+        Precondition: task_name is a non-existing task.
+        Postcondition: Adds task to the database table. True if successful. Also returns str with status message
+        """
+        return self.maintenance_model.create_task(task_name, notes, interval_days)

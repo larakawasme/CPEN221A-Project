@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>{{ "Add Maintenance Task" if mode == "add" else
+            "Edit Maintenance Task" }}</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet" />
+    </head>
+    <body class="bg-light">
+        <div class="container mt-4">
+            <h1>{{ "Add Maintenance Task" if mode == "add" else
+                "Edit Maintenance Task" }}</h1>
+
+            {% if message %}
+            <div
+                class="alert alert-{{ 'success' if message_type == 'success' else 'danger' }}"
+                role="alert">
+                {{ message }}
+            </div>
+            {% endif %}
+
+            <form method="POST">
+                {% if mode == "edit" %}
+                <div class="mb-3">
+                    <label for="task_name" class="form-label">Task:</label>
+                    <select id="task_name" name="task_name" class="form-select"
+                        required>
+                        {% for task in tasks %}
+                        <option value="{{ task.task_name }}">{{ task.task_name
+                            }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% else %}
+                <div class="mb-3">
+                    <label for="task_name" class="form-label">Task Name:</label>
+                    <input id="task_name" type="text" name="task_name"
+                        class="form-control" required>
+                </div>
+                {% endif %}
+
+                <div class="mb-3">
+                    <label for="notes" class="form-label">Notes:</label>
+                    <textarea id="notes" name="notes"
+                        class="form-control"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="interval_days" class="form-label">Interval
+                        Days:</label>
+                    <input id="interval_days" type="number" name="interval_days"
+                        class="form-control" min="1">
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        {{ "Update Task" if mode == "edit" else "Add Task" }}
+                    </button>
+                    <a href="{{ url_for('maintenance_history') }}"
+                        class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

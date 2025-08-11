@@ -17,7 +17,7 @@ class ChecklistModel:
             {"name": "Test brakes", "required": True},
             {"name": "Inspect chain for dryness", "required": True},
             {"name": "Check shifting is smooth", "required": True},
-            {"name": "Check tire pressure", "required": True}
+            {"name": "Check tire pressure", "required": True},
         ]
 
     def record_completion(self, completed_items: list[str]) -> bool:
@@ -31,7 +31,9 @@ class ChecklistModel:
         # Placeholder return
         return True
 
-    def customize_checklist(self, new_items: list[dict], removed_items: list[dict]) -> bool:
+    def customize_checklist(
+        self, new_items: list[dict], removed_items: list[dict]
+    ) -> bool:
         """
         Summary: Updates the checklist by adding and/or removing items.
 

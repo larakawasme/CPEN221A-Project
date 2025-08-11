@@ -1,5 +1,7 @@
 from models.maintenance_model import MaintenanceModel
 from models.bike_model import BikeModel
+
+
 class HomeController:
     def __init__(self, bike_model: BikeModel, maintenance_model: MaintenanceModel):
         """
@@ -30,7 +32,7 @@ class HomeController:
         Postcondition: Returns bike info dict or None if no bike registered.
         """
         return self.bike_model.get_bike_info()
-    
+
     def bike_exists(self) -> bool:
         """
         Summary: Checks if a bike is registered.
@@ -47,7 +49,7 @@ class HomeController:
 
         Postcondition: Returns a list of maintenance task dictionaries.
         """
-        all_tasks = self.maintenance_model.get_recent_tasks()
+        all_tasks = self.maintenance_model.get_tasks()
         return all_tasks[:max_tasks]
 
     def get_upcoming_and_overdue_tasks(self) -> tuple[list[dict], list[dict]]:

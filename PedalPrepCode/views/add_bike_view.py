@@ -1,5 +1,6 @@
 from controllers.bike_controller import BikeController
-from flask import request, render_template, redirect, url_for
+from flask import request, render_template
+
 
 class AddBikeView:
     def __init__(self, controller: BikeController):
@@ -17,21 +18,28 @@ class AddBikeView:
         Postcondition: Prompts user for bike details (type, brand, model, year, optional photo).
         """
         message = None
-        message_type = "success" 
+        message_type = "success"
         redirect_after = False
 
-        if request.method == 'POST':
-            bike_type = request.form.get('type')
-            brand = request.form.get('brand')
-            model = request.form.get('model', '')
-            year = request.form.get('year', '')
+        if request.method == "POST":
+            bike_type = request.form.get("type")
+            brand = request.form.get("brand")
+            model = request.form.get("model", "")
+            year = request.form.get("year", "")
 
-            success, message = self.controller.handle_bike_submission(bike_type, brand, model, year)
+            success, message = self.controller.handle_bike_submission(
+                bike_type, brand, model, year
+            )
 
             message_type = "success" if success else "danger"
             redirect_after = True if success else False
 
-        return render_template('add_bike.html', message=message, message_type=message_type, redirect_after=redirect_after)
+        return render_template(
+            "add_bike.html",
+            message=message,
+            message_type=message_type,
+            redirect_after=redirect_after,
+        )
 
     def display_success_message(self, message: str = "Bike registered successfully!"):
         """

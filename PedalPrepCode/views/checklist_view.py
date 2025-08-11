@@ -1,4 +1,6 @@
 from ..controllers.checklist_controller import ChecklistController
+
+
 class ChecklistView:
     def __init__(self, controller: ChecklistController):
         """

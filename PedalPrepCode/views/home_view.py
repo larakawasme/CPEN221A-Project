@@ -1,6 +1,7 @@
 from controllers.home_controller import HomeController
 from flask import Flask, render_template
 
+
 class HomeView:
     def __init__(self, controller: HomeController):
         """
@@ -15,8 +16,7 @@ class HomeView:
         Summary: Displays navigation options for the user.
         Postcondition: User can choose to navigate to other views (may abstract part of html to here not sure yet)
         """
-        pass 
-
+        pass
 
     def display_home_screen(self):
         """
@@ -27,16 +27,18 @@ class HomeView:
         if not self.controller.bike_exists():
             # Since no bike exists, display the blank home page that allows use to add bike
             return render_template("home_no_bike.html")
-        
+
         greeting = self.controller.get_greeting()
         bike_info = self.controller.get_bike_status_summary()
         recent_tasks = self.controller.get_recent_maintenance_tasks()
         overdue, upcoming = self.controller.get_upcoming_and_overdue_tasks()
 
         # Return rendered template
-        return render_template("home.html",
-                            greeting=greeting,
-                            bike_info=bike_info,
-                            recent_tasks=recent_tasks,
-                            overdue=overdue,
-                            upcoming=upcoming)
+        return render_template(
+            "home.html",
+            greeting=greeting,
+            bike_info=bike_info,
+            recent_tasks=recent_tasks,
+            overdue=overdue,
+            upcoming=upcoming,
+        )
