@@ -130,6 +130,7 @@ class ChecklistModel:
                 action = item.get("action")
 
                 if action == "add":
+                    interval = item.get("interval")
                     # Check if maintenance task exists
                     cursor.execute(
                         "SELECT id FROM maintenance_tasks WHERE task_name = ?",
@@ -139,11 +140,17 @@ class ChecklistModel:
                     if row:
                         maintenance_id = row[0]
                     else:
-                        # If doesn't exist, add it.
-                        cursor.execute(
-                            "INSERT INTO maintenance_tasks (task_name) VALUES (?)",
-                            (task_name,),
-                        )
+                        # If doesn't exist, add it with interval_days if provided
+                        if interval is not None:
+                            cursor.execute(
+                                "INSERT INTO maintenance_tasks (task_name, interval_days) VALUES (?, ?)",
+                                (task_name, interval),
+                            )
+                        else:
+                            cursor.execute(
+                                "INSERT INTO maintenance_tasks (task_name) VALUES (?)",
+                                (task_name,),
+                            )
                         cursor.execute(
                             "SELECT id FROM maintenance_tasks WHERE task_name = ?",
                             (task_name,),
