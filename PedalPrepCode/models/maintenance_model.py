@@ -53,7 +53,14 @@ class MaintenanceModel:
             cursor = con.cursor()
             current_date_time = datetime.now().isoformat()
 
-            # Insert new task if none exists, else update last_completed and notes
+            # If notes is empty, preserve old notes. Will update in future to add notes when completing but leaving for now
+            if not notes:
+                cursor.execute(
+                    "SELECT notes FROM maintenance_tasks WHERE task_name = ?",
+                    (task_name,)
+                )
+                row = cursor.fetchone()
+                notes = row[0] if row and row[0] is not None else ""
             cursor.execute(
                 """
                 INSERT INTO maintenance_tasks (task_name, last_completed, notes)
