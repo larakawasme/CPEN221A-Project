@@ -18,8 +18,9 @@ class MaintenanceHistoryView:
 
         Postcondition: Outputs the maintenance task history and alerts section.
         """
-        message = None
-        message_type = "success"
+        # Accept message from query string for banner
+        message = request.args.get("message")
+        message_type = request.args.get("message_type", "success")
 
         if request.method == "POST":
             action = request.form.get("action")
@@ -75,10 +76,19 @@ class MaintenanceHistoryView:
         tasks = self.controller.get_task_history()
         return render_template("edit_maintenance.html", tasks=tasks, mode=mode)
 
-    def navigate_to_home(self):
+    def add_to_checklist(self):
         """
-        Summary: Navigates back to the HomeView.
+        Summary: Adds a maintenance task to the checklist from the maintenance history page.
 
-        Postcondition: This would change the view. This will likely change I am unsure how this is going to work
+        Postcondition: The specified task is added to the checklist (if not already present),
+                        and the user is redirected back to the maintenance history page with a success message.
         """
-        print("Returning to home screen...")
+        task_name = request.form.get("task_name")
+        message = None
+        message_type = "success"
+        if task_name:
+            self.controller.update_checklist_customization(task_name, "add")
+            message = f"'{task_name}' added to checklist."
+        return redirect(
+            url_for("maintenance_history", message=message, message_type=message_type)
+        )

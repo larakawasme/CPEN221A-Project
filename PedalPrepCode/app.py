@@ -5,6 +5,7 @@ from controllers.checklist_controller import ChecklistController
 from controllers.maintenance_controller import MaintenanceController
 from views.home_view import HomeView
 from views.add_bike_view import AddBikeView
+from views.checklist_view import ChecklistView
 from views.maintenance_history_view import MaintenanceHistoryView
 from models.bike_model import BikeModel
 from models.maintenance_model import MaintenanceModel
@@ -33,6 +34,7 @@ maintenance_controller = MaintenanceController(maintenance_model=maintenance_mod
 home_view = HomeView(controller=home_controller)
 add_bike_view = AddBikeView(controller=bike_controller)
 maintenance_view = MaintenanceHistoryView(controller=maintenance_controller)
+checklist_view = ChecklistView(controller=checklist_controller)
 
 
 @app.route("/")
@@ -54,6 +56,21 @@ def maintenance_history():
 @app.route("/maintenance/edit", methods=["GET", "POST"])
 def edit_maintenance_tasks():
     return maintenance_view.display_edit_maintenance_tasks()
+
+
+@app.route("/checklist", methods=["GET", "POST"])
+def checklist():
+    return checklist_view.display_checklist()
+
+
+@app.route("/checklist/edit", methods=["GET", "POST"])
+def edit_checklist():
+    return checklist_view.customize_checklist()
+
+
+@app.route("/add-to-checklist", methods=["POST"])
+def add_to_checklist():
+    return maintenance_view.add_to_checklist()
 
 
 @app.teardown_appcontext

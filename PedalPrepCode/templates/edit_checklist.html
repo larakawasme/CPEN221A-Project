@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Edit Checklist - Pedal Prep</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet" />
+    </head>
+    <body class="bg-light">
+        <div class="container mt-4">
+            <h2>Edit Pre-Ride Checklist</h2>
+            <form method="POST">
+                <ul class="list-group mb-3">
+                    {% for item in items %}
+                    <li class="list-group-item d-flex align-items-center">
+                        <span class="ms-2">{{ item.task_name }}</span>
+                        <button type="submit" name="action"
+                            value="remove"
+                            class="btn btn-danger btn-sm ms-3">Remove</button>
+                        <input type="hidden" name="task_name"
+                            value="{{ item.task_name }}" />
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="new_task" class="form-label">Add New Task
+                            Name</label>
+                        <input type="text" class="form-control mb-2"
+                            id="new_task" name="new_task" />
+                        <label for="interval" class="form-label">Interval
+                            (days)</label>
+                        <input type="number" class="form-control mb-2"
+                            id="interval" name="interval" min="1"
+                            placeholder="Will default to 30 days if left blank" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="existing_task" class="form-label">Or choose
+                            from maintenance tasks:</label>
+                        <select class="form-select mb-2" id="existing_task"
+                            name="existing_task">
+                            <option value>-- Select a maintenance task
+                                --</option>
+                            {% for task in maintenance_tasks %}
+                            <option value="{{ task.task_name }}">{{
+                                task.task_name }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="form-text mt-2 text-danger">* Entering a
+                            task name or choosing a maintenance task is
+                            mandatory</div>
+                    </div>
+                </div>
+                <button type="submit" name="action" value="add"
+                    class="btn btn-success">Add Item</button>
+                <a href="{{ url_for('checklist') }}"
+                    class="btn btn-secondary ms-2">Back to Checklist</a>
+            </form>
+        </div>
+    </body>
+</html>

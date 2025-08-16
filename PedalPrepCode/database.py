@@ -34,17 +34,6 @@ def initialize_tables():
         """
     )
 
-    # Create checklist table
-    cursor.execute(
-        """
-        CREATE TABLE IF NOT EXISTS checklist (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            task TEXT NOT NULL,
-            completed BOOLEAN NOT NULL DEFAULT 0
-        )
-    """
-    )
-
     # Create maintenance table
     cursor.execute(
         """
@@ -55,6 +44,28 @@ def initialize_tables():
             notes TEXT,
             interval_days INTEGER DEFAULT 30 -- default reminder interval
         )
+        """
+    )
+
+    # Checklist table: the subset of maintenance tasks selected for the pre-ride checklist
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS checklist_tasks (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        maintenance_id INTEGER NOT NULL UNIQUE,
+        FOREIGN KEY(maintenance_id) REFERENCES maintenance_tasks(id)
+            )
+        """
+    )
+
+    # Current checklist: gets cleared for each checklist session and overwritten
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS checklist_session (
+        checklist_task_id INTEGER PRIMARY KEY,
+        completed BOOLEAN NOT NULL DEFAULT 0,
+        FOREIGN KEY(checklist_task_id) REFERENCES checklist_tasks(id)
+            )
         """
     )
     con.commit()

@@ -17,50 +17,49 @@ class ChecklistController:
 
     def get_checklist_items(self) -> list[dict]:
         """
-        Summary: Retrieves current checklist items (default and custom).
+        Summary: Retrieves current checklist items (default and custom). Just a wrapped.
         Postcondition: Returns a list of checklist items.
         """
-        return self.checklist_model.get_items()
+        return self.checklist_model.get_checklist_tasks()
 
-    def submit_checklist_completion(
-        self, completed_items: list[str], allow_incomplete: bool
-    ) -> bool:
+    def submit_checklist_completion(self, completed_items: list[str]) -> bool:
         """
         Summary: Submits checklist completion and updates timestamps.
 
         Precondition:
-            completed_items is a list of item names.
-            allow_incomplete is True if user confirmed skipping items.
+            completed_items is a list of task names.
 
         Postcondition:
             Records timestamp of checklist completion.
             Updates maintenance model for relevant items.
             Returns True if successfully recorded.
         """
-        return self.checklist_model.record_completion()
+        all_tasks = self.checklist_model.get_checklist_tasks()
+        # Map tasks to ID to mark as completed
+        name_to_id = {
+            task["task_name"]: task["checklist_task_id"] for task in all_tasks
+        }
+        for name in completed_items:
+            checklist_task_id = name_to_id.get(name)
+            if checklist_task_id:
+                success, _ = self.checklist_model.mark_task_completed(checklist_task_id)
+                if not success:
+                    return False
+        return True
 
     def update_checklist_customization(
-        self, new_items: list[dict], removed_items: list[dict]
+        self, task_name: str, action: str, interval: int = None
     ) -> bool:
         """
-        Summary: Customizes the checklist by adding/removing items.
+        Summary: Customizes the checklist by adding or removing a single item.
 
         Precondition:
-            new_items and removed_items are lists of dicts that contain item names and option how to complete
+            task_name is the name of the checklist item.
+            action is either 'add' or 'remove'.
 
         Postcondition: ChecklistModel is updated accordingly. Returns True if successful.
         """
-        return self.checklist_model.customize_checklist(
-            new_items=new_items, removed_items=removed_items
-        )
-
-    def warn_for_incomplete(self, completed_items: list[str]) -> bool:
-        """
-        Summary: Determines whether a warning should be shown for incomplete checklist.
-        Called by ChecklistView
-
-        Precondition: completed_items is a list of checked item names.
-
-        Postcondition: Returns True if there are unchecked required items.
-        """
-        return True
+        item = {"task_name": task_name, "action": action}
+        if interval is not None and action == "add":
+            item["interval"] = interval
+        return self.checklist_model.customize_checklist([item])

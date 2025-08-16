@@ -21,6 +21,8 @@
                     class="btn btn-primary">Edit Tasks</a>
                 <a href="{{ url_for('edit_maintenance_tasks', mode='add') }}"
                     class="btn btn-success">Add Task</a>
+                <a href="{{ url_for('home') }}" class="btn btn-secondary">Back
+                    to Home</a>
             </div>
 
             <div class="row g-4">
@@ -47,21 +49,34 @@
                                     {% for task in tasks %}
                                     <tr>
                                         <td>{{ task.task_name }}</td>
-                                        <td>{{ task.last_completed[:10] if task.last_completed else "Never"  }}</td>
+                                        <td>{{ task.last_completed[:10] if
+                                            task.last_completed else "Never"
+                                            }}</td>
                                         <td>{{ task.notes or "" }}</td>
                                         <td>{{ task.interval_days or 30 }}</td>
                                         <td>
-                                            <form method="POST"
-                                                action="{{ url_for('maintenance_history') }}">
-                                                <input type="hidden"
-                                                    name="action"
-                                                    value="complete">
-                                                <input type="hidden"
-                                                    name="task_name"
-                                                    value="{{ task.task_name }}">
-                                                <button type="submit"
-                                                    class="btn btn-sm btn-success">Complete</button>
-                                            </form>
+                                            <div class="d-flex gap-2">
+                                                <form method="POST"
+                                                    action="{{ url_for('maintenance_history') }}">
+                                                    <input type="hidden"
+                                                        name="action"
+                                                        value="complete">
+                                                    <input type="hidden"
+                                                        name="task_name"
+                                                        value="{{ task.task_name }}">
+                                                    <button type="submit"
+                                                        class="btn btn-sm btn-success">Complete</button>
+                                                </form>
+                                                <form method="POST"
+                                                    action="{{ url_for('add_to_checklist') }}">
+                                                    <input type="hidden"
+                                                        name="task_name"
+                                                        value="{{ task.task_name }}">
+                                                    <button type="submit"
+                                                        class="btn btn-sm btn-primary">Add
+                                                        to Checklist</button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -83,12 +98,13 @@
                         <div class="card-body">
                             <h5>Overdue Tasks</h5>
                             {% if overdue %}
-                            <ul class="list-group mb-3">
+                            <ul class="list-group mb-4">
                                 {% for task in overdue %}
                                 <li
                                     class="list-group-item list-group-item-danger">
                                     <strong>{{ task.task_name }}</strong> — Last
-                                    done: {{ task.last_completed or "Never" }}
+                                    Completed: {{ task.last_completed or "Never"
+                                    }}
                                 </li>
                                 {% endfor %}
                             </ul>
@@ -103,8 +119,8 @@
                                 <li
                                     class="list-group-item list-group-item-warning">
                                     <strong>{{ task.task_name }}</strong> — Last
-                                    done: {{ task.last_completed[:10] or "Never"
-                                    }}
+                                    Completed: {{ task.last_completed[:10] or
+                                    "Never" }}
                                 </li>
                                 {% endfor %}
                             </ul>

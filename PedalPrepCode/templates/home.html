@@ -42,13 +42,32 @@
                 <!-- Middle Column -->
                 <div class="col-md-6">
                     <div class="card">
-                        <div class="card-header">Recent Maintenance Tasks</div>
-                        <div class="card-body">
-                            <ul class="list-group">
-                                {% for task in recent_tasks %}
-                                <li class="list-group-item">{{ task }}</li>
-                                {% endfor %}
-                            </ul>
+                        <div class="card-header bg-success text-white">Recent
+                            Maintenance Tasks</div>
+                        <div class="card-body p-0">
+                            {% if recent_tasks %}
+                            <table class="table table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Task</th>
+                                        <th>Last Completed</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for task in recent_tasks %}
+                                    <tr>
+                                        <td>{{ task.task_name }}</td>
+                                        <td>{{ task.last_completed[:10] if
+                                            task.last_completed else "Never"
+                                            }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% else %}
+                            <p class="m-3">No recent maintenance tasks
+                                found.</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -56,25 +75,40 @@
                 <!-- Right Column -->
                 <div class="col-md-3">
                     <div class="card">
-                        <div class="card-header ">Alerts</div>
+                        <div
+                            class="card-header bg-danger text-white">Alerts</div>
                         <div class="card-body">
-                            <h6>Overdue</h6>
+                            <h6>Overdue Tasks</h6>
+                            {% if overdue %}
                             <ul class="list-group mb-3">
-                                {% for item in overdue %}
+                                {% for task in overdue %}
                                 <li
-                                    class="list-group-item list-group-item-danger">{{
-                                    item }}</li>
+                                    class="list-group-item list-group-item-danger">
+                                    <strong>{{ task.task_name }}</strong> — Last
+                                    Completed: {{ task.last_completed or "Never"
+                                    }}
+                                </li>
                                 {% endfor %}
                             </ul>
+                            {% else %}
+                            <p>No overdue tasks. Great job!</p>
+                            {% endif %}
 
-                            <h6>Upcoming</h6>
+                            <h6>Upcoming Tasks (Next 7 Days)</h6>
+                            {% if upcoming %}
                             <ul class="list-group">
-                                {% for item in upcoming %}
+                                {% for task in upcoming %}
                                 <li
-                                    class="list-group-item list-group-item-warning">{{
-                                    item }}</li>
+                                    class="list-group-item list-group-item-warning">
+                                    <strong>{{ task.task_name }}</strong> — Last
+                                    Completed: {{ task.last_completed[:10] or
+                                    "Never" }}
+                                </li>
                                 {% endfor %}
                             </ul>
+                            {% else %}
+                            <p>No upcoming tasks within the next week.</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
