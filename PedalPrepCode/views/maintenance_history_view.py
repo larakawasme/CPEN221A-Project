@@ -1,15 +1,21 @@
 from controllers.maintenance_controller import MaintenanceController
 from flask import request, render_template, redirect, url_for
+from controllers.checklist_controller import ChecklistController
 
 
 class MaintenanceHistoryView:
-    def __init__(self, controller: MaintenanceController):
+    def __init__(
+        self,
+        controller: MaintenanceController,
+        checklist_controller: ChecklistController,
+    ):
         """
         Summary: Initializes the MaintenanceHistoryView with a reference to MaintenanceController.
 
         Precondition: controller is an instance of MaintenanceController.
         """
         self.controller = controller
+        self.checklist_controller = checklist_controller
 
     def display_maintenance_history(self):
         """
@@ -87,7 +93,7 @@ class MaintenanceHistoryView:
         message = None
         message_type = "success"
         if task_name:
-            self.controller.update_checklist_customization(task_name, "add")
+            self.checklist_controller.update_checklist_customization(task_name, "add")
             message = f"'{task_name}' added to checklist."
         return redirect(
             url_for("maintenance_history", message=message, message_type=message_type)

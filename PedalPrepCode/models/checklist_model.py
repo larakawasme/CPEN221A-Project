@@ -102,6 +102,11 @@ class ChecklistModel:
             )
 
             con.commit()
+            # Get the task name for the return message
+            cursor.execute(
+                "SELECT task_name FROM maintenance_tasks WHERE id = ?",
+                (maintenance_id,)
+            )
             task_row = cursor.fetchone()
             cursor.close()
 

@@ -33,7 +33,9 @@ maintenance_controller = MaintenanceController(maintenance_model=maintenance_mod
 # Initialize Views
 home_view = HomeView(controller=home_controller)
 add_bike_view = AddBikeView(controller=bike_controller)
-maintenance_view = MaintenanceHistoryView(controller=maintenance_controller)
+maintenance_view = MaintenanceHistoryView(
+    controller=maintenance_controller, checklist_controller=checklist_controller
+)
 checklist_view = ChecklistView(controller=checklist_controller)
 
 

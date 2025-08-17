@@ -57,7 +57,7 @@ class MaintenanceModel:
             if not notes:
                 cursor.execute(
                     "SELECT notes FROM maintenance_tasks WHERE task_name = ?",
-                    (task_name,)
+                    (task_name,),
                 )
                 row = cursor.fetchone()
                 notes = row[0] if row and row[0] is not None else ""

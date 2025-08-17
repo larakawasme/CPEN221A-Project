@@ -36,7 +36,8 @@ class ChecklistView:
             self.controller.submit_checklist_completion(completed_items=completed_items)
             return redirect(url_for("home"))
 
-        # GET request — just show the checklist
+        # GET request — start a new checklist session and show the checklist
+        self.controller.checklist_model.start_new_checklist_session()
         return render_template(
             "checklist.html", items=self.controller.get_checklist_items()
         )
